@@ -1,0 +1,10 @@
+[project]
+name = "llmutex"
+version = "0.1.0"
+description = "A mutex-like API for leasing LLM resource access."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = []
+
+[project.scripts]
+llmutex = "src.main:main"
