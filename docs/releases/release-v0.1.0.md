@@ -74,7 +74,7 @@ Request Body (`application/json`):
     "keep_alive": "string",
     // [Optional, object] Runtime options that control text generation
     "options": {
-        // Random seed used for reproducible outputs
+        // [Optional, integer] Random seed used for reproducible outputs
         "seed": 0,
         // [Optional, float] Controls randomness in generation (higher = more random)
         "temperature": 0.0,
@@ -240,7 +240,7 @@ Request Body (`application/json`):
     "keep_alive": "string",
     // [Optional, object] Runtime options that control text generation
     "options": {
-        // Random seed used for reproducible outputs
+        // [Optional, integer] Random seed used for reproducible outputs
         "seed": 0,
         // [Optional, float] Controls randomness in generation (higher = more random)
         "temperature": 0.0,

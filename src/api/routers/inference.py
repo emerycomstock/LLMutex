@@ -15,14 +15,10 @@ Defines the handlers for API routes related to inference:
 
 @router.post("/generate")
 async def generate():
-    """
-    Handler for `/generate` API. Provides basic one-off prompt functionality from LLM.
-    """
+    """ Handler for `/generate` API. Provides basic one-off prompt functionality from LLM. """
     raise HTTPException(status_code=500, detail="API not functional.")
 
 @router.post("/chat")
 async def chat():
-    """
-    Handler for `/chat` API. Provides chat-like prompting with message history and tool use.
-    """
+    """ Handler for `/chat` API. Provides chat-like prompting with message history and tool use. """
     raise HTTPException(status_code=500, detail="API not functional.")
