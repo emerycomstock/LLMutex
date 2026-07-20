@@ -1,11 +1,13 @@
 from typing import Optional
 from pydantic import BaseModel, Field
-from ..message import Message
-from ..tool_def import ToolDef
-from ..generation_options import GenerationOptions
+from nested.message import Message
+from nested.tool_def import ToolDef
+from nested.generation_options import GenerationOptions
 from ...enums import Format
 
 class ChatRequest(BaseModel):
+    """ Request model for `/chat` API """
+
     model: str = Field()
     """ [Required, string] model name """
 

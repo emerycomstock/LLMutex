@@ -1,9 +1,11 @@
 from typing import Optional
 from pydantic import BaseModel, Field
-from ..generation_options import GenerationOptions
+from nested.generation_options import GenerationOptions
 from ...enums import Format
 
 class GenerateRequest(BaseModel):
+    """ Request model for `/generate` API """
+
     model: str = Field()
     """ [Required, string] Model name """
 
