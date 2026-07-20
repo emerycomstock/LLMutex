@@ -4,7 +4,9 @@ version = "0.1.0"
 description = "A mutex-like API for leasing LLM resource access."
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "fastapi>=0.139.2",
+]
 
 [project.scripts]
 llmutex = "src.main:main"
