@@ -1,43 +1,44 @@
-from pydantic import BaseModel
+from typing import Optional
+from pydantic import BaseModel, Field
 from ..generation_options import GenerationOptions
 from ...enums import Format
 
 class GenerateRequest(BaseModel):
-    model: str
+    model: str = Field()
     """ [Required, string] Model name """
 
-    prompt: str
+    prompt: Optional[str] = Field(default=None)
     """ [Optional, string] Text for the model to generate a response from """
 
-    suffix: str
+    suffix: Optional[str] = Field(default=None)
     """ [Optional, string] Used for fill-in-the-middle models, text that appears after the user prompt and before the model response """
 
-    images: list[str]
+    images: Optional[list[str]] = Field(default=None)
     """ [Optional, string[]] Base64-encoded images for models that support image input """
 
-    format: Format|dict
+    format: Optional[Format|dict] = Field(default=None)
     """ [Optional, enum string OR object] Structured output format for the model to generate a response from. Supports either the string `"json"` or a JSON schema object """
 
-    system: str
+    system: Optional[str] = Field(default=None)
     """ [Optional, string] System prompt for the model to generate a response from """
 
-    stream: bool
+    stream: Optional[bool] = Field(default=None)
     """ [Optional, boolean] When true, returns a stream of partial responses """
 
-    think: bool
+    think: Optional[bool] = Field(default=None)
     """ [Optional, boolean] When true, returns separate thinking output in addition to content. Can be a boolean (true/false) or a string ("high", "medium", "low", "max") for supported models, with "max" requesting the highest thinking level. """
 
-    raw: bool
+    raw: Optional[bool] = Field(default=None)
     """ [Optional, boolean] When true, returns the raw response from the model without any prompt templating """
 
-    keep_alive: str
+    keep_alive: Optional[str] = Field(default=None)
     """ [Optional, string] Model keep-alive duration (for example `5m` or `0` to unload immediately) """
 
-    options: GenerationOptions
+    options: Optional[GenerationOptions] = Field(default=None)
     """ [Optional, object] Runtime options that control text generation """
 
-    logprobs: bool
+    logprobs: Optional[bool] = Field(default=None)
     """ [Optional, boolean] Whether to return log probabilities of output tokens """
 
-    top_logprobs: int
+    top_logprobs: Optional[int] = Field(default=None)
     """ [Optional, integer] Number of most likely tokens to return at each position when logprobs are enabled """
