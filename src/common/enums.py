@@ -11,3 +11,8 @@ class Format(str, Enum):
 
 class ToolType(str, Enum):
     FUNCTION = "function"
+
+class ResponseType(str, Enum):
+    JSON = "json"
+    JSON_STREAM = "json-stream"
+    UNSUPPORTED = "unsupported"
