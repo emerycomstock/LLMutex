@@ -1,7 +1,7 @@
 from typing import Optional
 
 from pydantic import BaseModel, Field
-from ..enums import ToolType
+from ....enums import ToolType
 
 class ToolDefFunction(BaseModel):
     """ Details about a tool definition """

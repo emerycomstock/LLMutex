@@ -1,8 +1,8 @@
 from typing import Optional
 
 from pydantic import BaseModel, Field
-from tool_call import ToolCall
-from ..enums import Role
+from llmutex.src.common.types.dtos.nested.tool_call import ToolCall
+from ....enums import Role
 
 class Message(BaseModel):
     """ A single message in the chat history """
