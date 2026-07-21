@@ -368,7 +368,7 @@ Response Body (`application/x-ndjson`):
         "images": ["string"]
     },
     // Indicates whether the chat response has finished
-    "done": false,
+    "done": false
 }
 ```
 
