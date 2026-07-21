@@ -1,7 +1,7 @@
 from typing import Optional
-
 from pydantic import BaseModel, Field
-from llmutex.src.common.types.dtos.nested.tool_call import ToolCall
+from message import Message
+from tool_call import ToolCall
 from ....enums import Role
 
 class MessageResult(BaseModel):
@@ -21,3 +21,6 @@ class MessageResult(BaseModel):
 
     tool_calls: Optional[list[ToolCall]] = Field(default=None)
     """ Tool call requests produced by the model """
+
+    def to_message(self) -> Message:
+        return Message(self.role, self.content, self.images, self.tool_calls)
