@@ -1,4 +1,6 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
+from nested.api_settings import APISettings
 
 class Settings(BaseModel):
-    pass
+    api: APISettings = Field(default=APISettings())
+    """ API settings """
