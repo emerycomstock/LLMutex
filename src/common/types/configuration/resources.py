@@ -1,4 +1,5 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
+from typing_extensions import Self
 from nested.api_provider_details import ApiProviderDetails
 from ...enums import ResourceProviderType
 
@@ -15,4 +16,10 @@ class Resources(BaseModel):
     provider_details: ApiProviderDetails = Field()
     """ Detail model dependent on provider type """
 
-    # TODO: Validation for provider_type -> provider_details type match
+    @model_validator(mode='after')
+    def check_provider_type_match(self) -> Self:
+        """ Ensures that provider_type matches type of provider_details field """
+
+        if self.provider_type == ResourceProviderType.API and not isinstance(self.provider_details, ApiProviderDetails):
+            raise ValueError("If 'provider_type' is 'api' then 'provider_details' must match 'ApiProviderDetails' model")
+        return self
