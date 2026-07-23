@@ -16,3 +16,9 @@ class ResponseType(str, Enum):
     JSON = "json"
     JSON_STREAM = "json-stream"
     UNSUPPORTED = "unsupported"
+
+class ResourceProviderType(str, Enum):
+    API = "api"
+
+class ApiResourceSpec(str, Enum):
+    OLLAMA = "ollama"
