@@ -24,19 +24,25 @@ api:
 
 Current supported `resources` file format and default values:
 ```yaml
-example_resource:
-    # Unique string id, used in API requests
-    id: example-resource
+resources:
+    # Unique string id, used in API requests (slug, unique)
+  - id_slug: example-resource
     # Display name for use by clients and future features
     display_name: "Example Resource"
-    # Currently supported values: [api]
-    provider_type: api
-    # Detail model dependent on provider type, example shows API type provider details
-    provider_details:
-        # API spec, currently supported values: [ollama]
-        spec: ollama
-        host: localhost
-        port: 11434 # Ollama default port
+    # List of providers
+    providers:
+        # Provider id, used in API requests (slug, unique)
+      - id_slug: "example-api-provider"
+        # Provider display name
+        display_name: "Example API Provider"
+        # Currently supported values: [api]
+        provider_type: api
+        # Detail model dependent on provider type, example shows API type provider details
+        provider_details:
+            # API spec, currently supported values: [ollama]
+            spec: ollama
+            host: localhost
+            port: 11434 # Ollama default port
 ```
 
 ### On-demand Single-request Leasing

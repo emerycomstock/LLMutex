@@ -4,8 +4,9 @@ from ...common.types.configuration import Settings, Resources
 
 ConfigModel = TypeVar('ConfigModel', Settings, Resources)
 
-class ConfigurationSource(ABC, Generic[ConfigModel]):
+class ConfigurationSourceOfTruth(ABC, Generic[ConfigModel]):
 
     @abstractmethod
-    def resolve_config(self) -> ConfigModel:
+    def resolve(self) -> ConfigModel:
+        """ Returns the last """
         pass

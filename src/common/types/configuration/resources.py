@@ -3,6 +3,7 @@ from typing_extensions import Self
 from nested.api_provider_details import ApiProviderDetails
 from ...enums import ResourceProviderType
 
+# TODO: Defaults and default factories
 class Resources(BaseModel):
     id: str = Field()
     """ Unique string id, used in API requests """
