@@ -26,13 +26,13 @@ Current supported `resources` file format and default values:
 ```yaml
 resources:
     # Unique string id, used in API requests (slug, unique)
-  - id_slug: example-resource
+  - slug: example-resource
     # Display name for use by clients and future features
     display_name: "Example Resource"
     # List of providers
     providers:
         # Provider id, used in API requests (slug, unique)
-      - id_slug: "example-api-provider"
+      - slug: "example-api-provider"
         # Provider display name
         display_name: "Example API Provider"
         # Currently supported values: [api]
