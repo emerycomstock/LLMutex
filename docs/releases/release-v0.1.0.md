@@ -387,13 +387,38 @@ The following components are targeted for implementation at this version.
 title: Component Relationships
 ---
 flowchart
-    config-manager[Service Configuration Manager]
     file-config-adapter([File Configuration Adapter])
     
     http-api((HTTP API Layer))
     resource-manager[Resource Manager]
     ollama-proxy-adapter([Ollama API Proxy Adapter])
     lease-manager[Lease Manager]
+
+    subgraph API Layer
+        fast-api-server[Fast API Server]
+        generate-api-handler[Generate API Handler]
+        chat-api-handler[Chat API Handler]
+
+        fast-api-server -- Invokes --> generate-api-handler
+        fast-api-server -- Invokes --> chat-api-handler
+    end
+
+    subgraph Configuration
+        config-manager[Service Configuration Manager]
+        settings-sot[Settings Configuration Source of Truth]
+        resources-sot[Resources Configuration Source of Truth]
+        file-sot[File Configuration Source of Truth]
+
+        settings-model[Settings Configuration Model]
+        resources-model[Resources Configuration Model]
+
+        config-manager -- Has A --> settings-sot
+        config-manager -- Has A --> resources-sot
+        settings-sot -. Is A .-> file-sot
+        settings-sot -- Produces --> settings-model
+        resources-sot -. Is A .-> file-sot
+        resources-sot -- Produces --> resources-model
+    end
 
     http-api --> lease-manager
     http-api --> resource-manager
