@@ -387,14 +387,10 @@ The following components are targeted for implementation at this version.
 title: Component Relationships
 ---
 flowchart
-    file-config-adapter([File Configuration Adapter])
-    
-    http-api((HTTP API Layer))
-    resource-manager[Resource Manager]
-    ollama-proxy-adapter([Ollama API Proxy Adapter])
-    lease-manager[Lease Manager]
 
-    subgraph API Layer
+    subgraph api-layer [API Layer]
+        direction TB
+
         fast-api-server[Fast API Server]
         generate-api-handler[Generate API Handler]
         chat-api-handler[Chat API Handler]
@@ -403,7 +399,9 @@ flowchart
         fast-api-server -- Invokes --> chat-api-handler
     end
 
-    subgraph Configuration
+    subgraph config-layer [Configuration Layer]
+        direction RL
+
         config-manager[Service Configuration Manager]
         settings-sot[Settings Configuration Source of Truth]
         resources-sot[Resources Configuration Source of Truth]
@@ -420,45 +418,45 @@ flowchart
         resources-sot -- Produces --> resources-model
     end
 
-    http-api --> lease-manager
-    http-api --> resource-manager
-    http-api --> config-manager
-    
-    lease-manager --> config-manager
+    subgraph lease-management-layer [Lease Management Layer]
+        direction TB
 
-    resource-manager --> ollama-proxy-adapter
-    resource-manager --> config-manager
+        lease-manager[Lease Manager]
+        lease-queue[Lease Queue]
+        lease-map[Active Lease Map]
+        lease-model[Lease Model]
 
-    config-manager --> file-config-adapter
+        lease-manager -- Has A --> lease-queue
+        lease-manager -- Has A --> lease-map
+        lease-queue -- Has Many --> lease-model
+        lease-map -- Has Many --> lease-model
+    end
+
+    subgraph resource-proxy-layer [Resource Proxy Layer]
+        direction TB
+
+        resource-manager[Resource Manager]
+        resource[Resource]
+        provider[Provider]
+        functionality[Functionality]
+        client-adapter[Client Adapter]
+        ollama-client-adapter[Ollama Client Adapter]
+        ollama-client[Client]
+
+        resource-manager -- Has Many --> resource
+        resource -- Has Many --> provider
+        provider -- Has Many --> functionality
+        provider -- Has A --> client-adapter
+        ollama-client-adapter -. Is A .-> client-adapter
+        ollama-client-adapter -- Has A --> ollama-client
+    end
+
+    api-layer --> config-layer
+    api-layer --> lease-management-layer
+    api-layer --> resource-proxy-layer
+    lease-management-layer --> config-layer
+    resource-proxy-layer --> config-layer
 ```
-
-### Basic Service Configuration Manager
-
-Service type for managing service configuration, including service-level settings and resource discovery. Responsible for providing current configuration state to types that consume that state, making updates to the state, initializing the configuration file properly, and applying overrides in the correct order.
-
-Initial configuration state and overrides will be interacted with via "adapter" types, each following the same interface but mapping to a different underlying source (file, environment variable, and others).
-
-### File Configuration Adapter
-
-Generic adapter that maps YAML file contents at a provided path to a given model type. Used for both `settings` files and `resources` files.
-
-### HTTP API Layer
-
-API handlers (for the moment supporting only HTTP) that act as a facade and allow use of Ollama inferencing APIs.
-
-### Resource Manager
-
-Provides access to LLM resources, associating configurations to appropriate API proxy adapters and serving as an interface to interact with those resources.
-
-### Ollama API Proxy Adapter
-
-Provides access to Ollama APIs serving as a client wrapper to translate and proxy requests.
-
-### Basic Lease Manager Skeleton
-
-Allows access and management of resource leases, on-demand leasing features will be essentially non-existent so this component will not yet be used.
-
-Implementation will mostly be skeletal, laying out non-functional members for future use.
 
 ## Release Notes
 
